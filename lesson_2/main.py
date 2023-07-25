@@ -29,8 +29,8 @@ def check_prime(num: str) -> bool:
     num = int(num)
     if num <= 1:  # 1 не простое число
         return False
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
+    for delit in range(2, int(num ** 0.5) + 1):
+        if num % delit == 0:
             return False
     return True
 
@@ -101,3 +101,4 @@ if __name__ == '__main__':
                 people[human] = dict(sorted(people[human].items(), key=lambda x: (x[0])))
                 for purchase in people[human]:
                     print(purchase, people[human][purchase])
+    input("Нажмите любую клавишу для продолжения...")
