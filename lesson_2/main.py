@@ -6,12 +6,13 @@ from collections import defaultdict
 
 lowest_sym = ord('A')
 
+
 def map(function, nums: list[float]):
     # nums_dub = [0] * len(nums)  # Как НЕ копировать значения, а отсылать в функцию копию?
     return [function(nums[index]) for index in range(len(nums))]
 
 
-def is_div(num, filt=9):
+def is_div(num: int, filt=9):
     return num % filt == 0
 
 
@@ -20,14 +21,7 @@ def pow_er(num: float, step=2):
 
 
 def check_palindrom(word: str) -> bool:
-    if len(word) % 2 == 0:
-        if word[0:(len(word) // 2)] == word[-1:(len(word) // 2) - 1:-1]:
-            return True
-        return False
-
-    if word[0:(len(word) // 2)] == word[-1:(len(word) // 2):-1]:
-        return True
-    return False
+    return word == word[::-1]
 
 
 def check_prime(num: str) -> bool:
@@ -70,6 +64,6 @@ if __name__ == '__main__':
             print(*dict(sorted(sum_words.items(), key=lambda x: (x[1], x[0]))).keys())
 
         case 'G':
-            check_pin(list(input().split("-")))
+            check_pin(input().split("-"))
             # 7-101-4
             # 12-22-16

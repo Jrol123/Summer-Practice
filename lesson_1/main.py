@@ -56,18 +56,10 @@ if __name__ == '__main__':
             print(answer)
         case 5:
             word = input().replace(" ", "").lower()
-
-            if len(word) % 2 == 0:
-                if word[0:(len(word) // 2)] == word[-1:(len(word) // 2) - 1:-1]:
-                    print("YES")
-                    sys.exit(0+1)
-                print("NO")
-                sys.exit(0+0)
-
-            if word[0:(len(word) // 2)] == word[-1:(len(word) // 2):-1]:
+            if word == word[::-1]:
                 print("YES")
-                sys.exit(2+1)
+                sys.exit(1)
             print("NO")
-            sys.exit(2+0)
+            sys.exit(0)
         case 6:
             print(" ".join(i for i in input().split() if int(i) % 2 == 0))
