@@ -78,6 +78,7 @@ if __name__ == '__main__':
         case 'Q':
             count_countries = int(input())
             countries = dict()
+            # cities, *countr = input().split()
             for _ in range(count_countries):
                 cities = list(input().split())  # Можно ли как-то функцией map выделить первый элемент?
                 for i in range(1, len(cities)):
@@ -86,15 +87,12 @@ if __name__ == '__main__':
             for _ in range(int(input())):
                 print(countries[input()])
         case 'U':
-            transaction = sys.stdin.readline().replace("\n", "")
+            # not enough values to unpack (expected 3, got 1)
             people = defaultdict(lambda: defaultdict(int))
-            while transaction:
-                # Тело условия цикла явно можно сделать подлиннее...
-                person, item, count = transaction.split()
+            for person, item, count in sys.stdin.readline().split():
                 # people[person].append((item, int(count)))  # Добавляет кортеж как набор элементов!
                 people[person][item] += int(count)  # Добавляет словарь как набор элементов!
                 # .append и += не эквивалентны
-                transaction = sys.stdin.readline().replace("\n", "")
             people = dict(sorted(people.items(), key=lambda x: (x[0])))
             for human in people:
                 print(human + ":")
