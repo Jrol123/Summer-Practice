@@ -3,54 +3,107 @@
 """
 import pygame as pg
 
-bgc = (255, 255, 255)
-
-
-class Board:
-    def __int__(self, width: int, height: int):
-        """
-
-        Единицы измерения — пиксели.
-        :param width: ширина
-        :param height: высота
-        """
-        self.width = width
-        self.height = height
-        self.board = [[0] * width for _ in range(height)]
-        # значения по умолчанию
-        self.left = 10
-        self.top = 10
-        self.cell_size = 30
-
-    # настройка внешнего вида
-    def set_view(self, left, top, cell_size):
-        self.left = left
-        self.top = top
-        self.cell_size = cell_size
-
+from tasks.Chess import Board
+from tasks.Half_miner import MinerBoard
 
 if __name__ == '__main__':
-    size = width, height = (400, 300)
-    screen = pg.display.set_mode(size)
-    pg.init()
+    match input():
+        case 'A':
+            len_side, count_squares = map(int, input().split())
+            screen = pg.display.set_mode((len_side, len_side))
+            pg.init()
+            board = Board(len_side, count_squares)
 
-    # board = Board(5, 7)
-    running = True
-    x_pos = 0
-    speed = 20  # pix per sec
-    delta_speed = 10
-    max_speed = 500
-    radius = 20
-    clock = pg.time.Clock()
-    while running:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                running = False
-            if event.type == pg.MOUSEBUTTONDOWN:
-                speed = (speed + delta_speed) % max_speed
-        screen.fill(bgc)
-        pg.draw.circle(screen, (255, 0, 0), (x_pos, 200), radius)
-        x_pos = (x_pos + speed * clock.tick() / 1000) % (width + radius)
-        pg.display.flip()
+            running = True
+            while running:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        running = False
+                board.draw(screen)
+                pg.display.flip()
+
+        case 'C':
+            # Во время движения отрисовывает нормально. После движения плохо запоминает.
+            # Можно запоминать прямоугольники и каждый раз их отрисовывать.
+            # Не совсем понимаю, как можно это провернуть со множеством screen, ведь они будут перекрывать друг-друга!
+            bgc = (0, 0, 0)
+            sub_color = (255, 255, 255)
+
+            size_screen = tuple(map(int, input().split()))
+            screen = pg.display.set_mode(size_screen)
+            screen2 = pg.display.set_mode(size_screen)
+            list_surface = []
+            """Координаты левой верхней точки + ширина + высота"""
+            pg.init()
+
+            x1, y1, w, h = 0, 0, 0, 0
+            drawing = False
+
+            running = True
+            while running:
+                for event in pg.event.get():
+                    match event.type:
+                        case pg.QUIT:
+                            running = False
+                        case pg.MOUSEBUTTONDOWN:
+                            drawing = True
+                            screen2.fill(bgc)
+                            x1, y1 = event.pos
+                        case pg.MOUSEMOTION:
+                            """
+                            Отрисовка на доп. экране.
+                            
+                            Позже прикрепляется к основному экрану.
+                            """
+                            w, h = event.pos[0] - x1, event.pos[1] - y1
+                            # w, h = event.pos[0], event.pos[1]
+                            if drawing:
+                                # Не рисует с отрицательными координатами
+                                screen2.fill(bgc)
+                                screen2.blit(screen, (0, 0))
+                                coords = (min(x1, x1 + w), min(y1, y1 + h))
+                                pg.draw.rect(screen2, sub_color, (coords, (abs(w), abs(h))), 1)
+
+                                # pg.draw.rect(screen2, sub_color, (top_coords, bottom_coords), 1)
+                        case pg.MOUSEBUTTONUP:
+                            # ПРОБЛЕМА!!!!
+                            # Переработать систему с top / bottom. Необходимо искать минимальную пару точек.
+                            # Хотя стоп...
+                            drawing = False
+
+                            coords = (min(x1, x1 + w), min(y1, y1 + h))
+                            list_surface.append((coords, (abs(w), abs(h))))
+                            screen.fill(bgc)
+                            for entity in list_surface:
+                                pg.draw.rect(screen, sub_color, entity, 1)
+                        case pg.KEYDOWN:
+                            if not (event.key == pg.K_z and pg.key.get_mods() & pg.KMOD_CTRL):
+                                continue
+                            list_surface.pop(-1)
+                            screen.fill(bgc)
+                            for entity in list_surface:
+                                pg.draw.rect(screen, sub_color, entity, 1)
+                if drawing:
+                    screen.blit(screen2, (0, 0))
+                    for entity in list_surface:
+                        pg.draw.rect(screen, sub_color, entity, 1)
+                pg.display.flip()
+
+        case 'D':
+            len_side, count_squares = map(int, input().split())
+            screen = pg.display.set_mode((width, height))
+            pg.init()
+            board = MinerBoard(len_side, count_squares, list())
+
+            running = True
+            while running:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        running = False
+                board.draw(screen)
+                pg.display.flip()
+
+        case _:
+            print("Неправильный ввод")
 
     pg.quit()
