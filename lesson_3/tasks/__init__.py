@@ -1,10 +1,11 @@
 """
-Сборник (практически) всех задач на 3-ю лекцию.
+Сборник всех задач, которые необходимо сделать на 3-ю лекцию.
 
 Список зависимостей:
     math
+    abc.abstractmethod
 
-Artemii Popovkin [https://github.com/Jrol123/REC3D]
+Artemii Popovkin [https://github.com/Jrol123/Summer-Practice]
 angap4@gmail.com
 
 # License: MIT
@@ -19,5 +20,5 @@ from tasks.Summators import *
 
 __author__ = 'Artemii Popovkin'
 
-__version__ = "0.7.9"
+__version__ = "1.1.0"
 

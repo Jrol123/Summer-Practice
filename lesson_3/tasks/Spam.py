@@ -33,14 +33,10 @@ class Person:
         :param keyword: ключевое слово.
         :return: Номер телефона
         :rtype: str | None
-        :except None: Если нет номера телефона.
 
         """
         # Как правильно оформить except?
-        try:
-            return self.phone_book[keyword]
-        except:
-            return None
+        return self.phone_book.get(keyword, None)  # Второй аргумент кастомный.
 
     def get_work_phone(self) -> str | None:
         """
