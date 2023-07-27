@@ -125,24 +125,25 @@ def e_test1():
 
 
 def f_test1():
-    summator1 = Summator()  # Можно ли сделать абстрактную функцию?
-    print(summator1.sum(5))  # 15
-    print(summator1.sum(4))  # 10
-    print(summator1.sum(7))  # 28
+    # Абстрактный класс.
+
+    # ! Будет перезаписан лист общий для класса,
+    # поэтому при создании summator1 = Summator() он уже будет иметь изменённый лист!
+    print(Summator().sum(5))  # 15
+    print(Summator().sum(4))  # 10
+    print(Summator().sum(7))  # 28
 
     print()
 
-    summator2 = SquareSummator()
-    print(summator2.sum(5))  # 55
-    print(summator2.sum(4))  # 30
-    print(summator2.sum(7))  # 140
+    print(SquareSummator().sum(5))  # 55
+    print(SquareSummator().sum(4))  # 30
+    print(SquareSummator().sum(7))  # 140
 
     print()
 
-    summator3 = CubeSummator()
-    print(summator3.sum(5))  # 225
-    print(summator3.sum(4))  # 100
-    print(summator3.sum(7))  # 184
+    print(CubeSummator().sum(5))  # 225
+    print(CubeSummator().sum(4))  # 100
+    print(CubeSummator().sum(7))  # 184
 
 
 if __name__ == '__main__':
