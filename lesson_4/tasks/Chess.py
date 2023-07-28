@@ -25,6 +25,7 @@ class Board:
 
     """
 
+    # Ошибка на 1100 40
     def __init__(self, length: int, count_cells: int):
         """
         Инициализация класса.

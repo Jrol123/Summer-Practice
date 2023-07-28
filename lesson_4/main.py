@@ -23,8 +23,7 @@ if __name__ == '__main__':
                 pg.display.flip()
 
         case 'C':
-            # Во время движения отрисовывает нормально. После движения плохо запоминает.
-            # Можно запоминать прямоугольники и каждый раз их отрисовывать.
+            # Реализовано через запоминание фигур
             # Не совсем понимаю, как можно это провернуть со множеством screen, ведь они будут перекрывать друг-друга!
             bgc = (0, 0, 0)
             sub_color = (255, 255, 255)
@@ -56,19 +55,12 @@ if __name__ == '__main__':
                             Позже прикрепляется к основному экрану.
                             """
                             w, h = event.pos[0] - x1, event.pos[1] - y1
-                            # w, h = event.pos[0], event.pos[1]
                             if drawing:
-                                # Не рисует с отрицательными координатами
                                 screen2.fill(bgc)
                                 screen2.blit(screen, (0, 0))
                                 coords = (min(x1, x1 + w), min(y1, y1 + h))
                                 pg.draw.rect(screen2, sub_color, (coords, (abs(w), abs(h))), 1)
-
-                                # pg.draw.rect(screen2, sub_color, (top_coords, bottom_coords), 1)
                         case pg.MOUSEBUTTONUP:
-                            # ПРОБЛЕМА!!!!
-                            # Переработать систему с top / bottom. Необходимо искать минимальную пару точек.
-                            # Хотя стоп...
                             drawing = False
 
                             coords = (min(x1, x1 + w), min(y1, y1 + h))
@@ -91,15 +83,21 @@ if __name__ == '__main__':
 
         case 'D':
             len_side, count_squares = map(int, input().split())
-            screen = pg.display.set_mode((width, height))
+            screen = pg.display.set_mode((len_side, len_side))
             pg.init()
-            board = MinerBoard(len_side, count_squares, list())
+            map_mines = [[False, False, True, True],
+                         [False, True, False, True],
+                         [False, False, False, False],
+                         [True, False, False, False]]
+            board = MinerBoard(len_side, count_squares)
 
             running = True
             while running:
                 for event in pg.event.get():
                     if event.type == pg.QUIT:
                         running = False
+                    if event.type == pg.MOUSEBUTTONDOWN:
+                        board.get_click(event.pos)
                 board.draw(screen)
                 pg.display.flip()
 
