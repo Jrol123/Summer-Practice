@@ -12,10 +12,11 @@ angap4@gmail.com
 """
 
 from tasks.Chess import Board
-from tasks.Half_miner import MinerBoard
-from tasks.Multip_table import Table
+from tasks.Ctrl_Z import *
+from tasks.Half_miner import *
+from tasks.Multip_table import *
 
 __author__ = 'Artemii Popovkin'
 
-__version__ = "0.9.5"
+__version__ = "0.0.0"
 
