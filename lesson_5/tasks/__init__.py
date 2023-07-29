@@ -11,10 +11,7 @@ angap4@gmail.com
 
 """
 
-from tasks.Chess import Board
-from tasks.Ctrl_Z import *
-from tasks.Half_miner import *
-from tasks.Multip_table import *
+from tasks import *
 
 __author__ = 'Artemii Popovkin'
 
