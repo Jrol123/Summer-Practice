@@ -18,5 +18,5 @@ from tasks.Multip_table import *
 
 __author__ = 'Artemii Popovkin'
 
-__version__ = "0.3.0"
+__version__ = "0.9.5"
 
