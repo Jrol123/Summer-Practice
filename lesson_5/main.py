@@ -22,7 +22,7 @@ class Ball(pg.sprite.Sprite):
         color.hsva = (randint(0, 360),  randint(0, 100), 100, 100)
         pg.draw.circle(self.image, color,
                        (radius, radius), radius)
-        self.rect = pg.Rect(x, y, 2 * radius - 5, 2 * radius - 5)
+        self.rect = pg.Rect(x, y, 2 * radius, 2 * radius)
         self.x = x
         self.y = y
         self.vx = speed_var[randint(0, 19)]
